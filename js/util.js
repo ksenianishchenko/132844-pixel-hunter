@@ -1,9 +1,12 @@
-
-const createDomElement = (templateBlock) => {
-  let screenWrapElement = document.querySelector(`.central`);
-  screenWrapElement.innerHTML = ``;
-  screenWrapElement.appendChild(templateBlock);
-  return screenWrapElement;
+let screenWrapElement = document.querySelector(`.central`);
+export const createDomElement = (template) => {
+  const outer = document.createElement(`div`);
+  outer.innerHTML = `${template}`;
+  return outer;
 };
 
-export default createDomElement;
+export const changeScreen = (element) => {
+  screenWrapElement.innerHTML = ``;
+  screenWrapElement.appendChild(element);
+  return screenWrapElement;
+};
