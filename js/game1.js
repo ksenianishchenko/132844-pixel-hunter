@@ -90,6 +90,12 @@ const onGameOptionChanged = () => {
     }
   }
   if (!hasUnchecked) {
+    for (let i = 0; i < gameOptionsArea.length; i++) {
+      let radios = gameOptionsArea[i].querySelectorAll(`input[type=radio]`);
+      for (let j = 0; j < radios.length; j++) {
+        radios[j].checked = false;
+      }
+    }
     changeScreen(fifthScreen);
   }
 };
