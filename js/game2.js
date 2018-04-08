@@ -66,6 +66,7 @@ const onGameOptionChanged = () => {
   for (let j = 0; j < radiosButtons.length; j++) {
     if (radiosButtons[j].checked) {
       changeScreen(sixthScreen);
+      radiosButtons[j].checked = false;
     }
   }
 };

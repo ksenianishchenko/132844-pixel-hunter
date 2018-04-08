@@ -51,6 +51,8 @@ rulesInput.addEventListener(`keyup`, (event) => {
 });
 
 goButton.addEventListener(`click`, () => {
+  rulesInput.value = ``;
+  goButton.setAttribute(`disabled`, `disabled`);
   changeScreen(fourthScreen);
 });
 
