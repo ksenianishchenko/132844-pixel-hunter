@@ -13,8 +13,7 @@ describe(`Check timer`, () => {
     assert.equal(timer.tick(), 0);
     assert.equal(timer.isFinished(), true);
   });
-  it(`should return 0 when timer has invalid value`, () => {
-    let timer = getTimer(-1);
-    assert.equal(timer.tick(), 0);
+  it(`should not allow set negative values`, () => {
+    assert.throws(() => getTimer(-1), /should not allow set negative values/);
   });
 });

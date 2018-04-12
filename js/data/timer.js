@@ -1,16 +1,12 @@
 export const getTimer = (seconds) => {
+  if (seconds < 0) {
+    throw new Error(`should not allow set negative values`);
+  }
   const timer = {
-    isFinished: () => {
-      if (seconds > 0) {
-        return false;
-      }
-      return true;
-    },
+    isFinished: () => seconds > 0 ? false : true,
     tick: () => {
       if (seconds > 0) {
         seconds -= 1;
-      } else {
-        seconds = 0;
       }
       return seconds;
     }
