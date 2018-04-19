@@ -1,75 +1,72 @@
-import {createDomElement, changeScreen} from './util';
+import {createDomElement, changeScreen, renderBlock} from './util';
 import fifthScreen from './game2';
 import secondScreen from './greeting';
+import footerTemplate from './footer';
+import headerButtonTemplate from './header-button';
+import {data, initialState, game} from './data/game-data';
+import livesElementTemplate from './lives';
+import {checkAnswers} from './data/data-answer';
 
+const lives = livesElementTemplate(initialState);
 
-const elementGame1 = `<header class="header">
-  <div class="header__back">
-    <button class="back">
-      <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
-      <img src="img/logo_small.svg" width="101" height="44">
-    </button>
-  </div>
-  <h1 class="game__timer">NN</h1>
-  <div class="game__lives">
-    <img src="img/heart__empty.svg" class="game__heart" alt="Life" width="32" height="32">
-    <img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">
-    <img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">
-  </div>
-</header>
-<div class="game">
-  <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
-  <form class="game__content">
-    <div class="game__option">
-      <img src="http://placehold.it/468x458" alt="Option 1" width="468" height="458">
-      <label class="game__answer game__answer--photo">
-        <input name="question1" type="radio" value="photo">
-        <span>Фото</span>
-      </label>
-      <label class="game__answer game__answer--paint">
-        <input name="question1" type="radio" value="paint">
-        <span>Рисунок</span>
-      </label>
+const elementGame1 = () => {
+  const content = `<header class="header">
+    ${headerButtonTemplate}
+    <div id="timer">
+      <h1 class="game__timer">NN</h1>
     </div>
-    <div class="game__option">
-      <img src="http://placehold.it/468x458" alt="Option 2" width="468" height="458">
-      <label class="game__answer  game__answer--photo">
-        <input name="question2" type="radio" value="photo">
-        <span>Фото</span>
-      </label>
-      <label class="game__answer  game__answer--paint">
-        <input name="question2" type="radio" value="paint">
-        <span>Рисунок</span>
-      </label>
+    <div id="lives">
+      ${lives}
     </div>
-  </form>
-  <div class="stats">
-    <ul class="stats">
-      <li class="stats__result stats__result--wrong"></li>
-      <li class="stats__result stats__result--slow"></li>
-      <li class="stats__result stats__result--fast"></li>
-      <li class="stats__result stats__result--correct"></li>
-      <li class="stats__result stats__result--unknown"></li>
-      <li class="stats__result stats__result--unknown"></li>
-      <li class="stats__result stats__result--unknown"></li>
-      <li class="stats__result stats__result--unknown"></li>
-      <li class="stats__result stats__result--unknown"></li>
-      <li class="stats__result stats__result--unknown"></li>
-    </ul>
-  </div>
-</div>
-<footer class="footer">
-  <a href="https://htmlacademy.ru" class="social-link social-link--academy">HTML Academy</a>
-  <span class="footer__made-in">Сделано в <a href="https://htmlacademy.ru" class="footer__link">HTML Academy</a> &copy; 2016</span>
-  <div class="footer__social-links">
-    <a href="https://twitter.com/htmlacademy_ru" class="social-link  social-link--tw">Твиттер</a>
-    <a href="https://www.instagram.com/htmlacademy/" class="social-link  social-link--ins">Инстаграм</a>
-    <a href="https://www.facebook.com/htmlacademy" class="social-link  social-link--fb">Фэйсбук</a>
-    <a href="https://vk.com/htmlacademy" class="social-link  social-link--vk">Вконтакте</a>
-  </div>
-</footer>`;
+  </header>
+  <div class="game">
+    <p class="game__task">${data.game1.description}</p>
+    <form class="game__content">
+      <div class="game__option">
+        <img src="${game[0].resources[0].src}" alt="Option 1" width="468" height="458">
+        <label class="game__answer game__answer--photo">
+          <input name="question1" type="radio" value="photo">
+          <span>Фото</span>
+        </label>
+        <label class="game__answer game__answer--paint">
+          <input name="question1" type="radio" value="paint">
+          <span>Рисунок</span>
+        </label>
+      </div>
+      <div class="game__option">
+        <img src="${game[0].resources[1].src}" alt="Option 2" width="468" height="458">
+        <label class="game__answer  game__answer--photo">
+          <input name="question2" type="radio" value="photo">
+          <span>Фото</span>
+        </label>
+        <label class="game__answer  game__answer--paint">
+          <input name="question2" type="radio" value="paint">
+          <span>Рисунок</span>
+        </label>
+      </div>
+    </form>
+    <div class="stats">
+      <ul class="stats">
+        <li class="stats__result stats__result--wrong"></li>
+        <li class="stats__result stats__result--slow"></li>
+        <li class="stats__result stats__result--fast"></li>
+        <li class="stats__result stats__result--correct"></li>
+        <li class="stats__result stats__result--unknown"></li>
+        <li class="stats__result stats__result--unknown"></li>
+        <li class="stats__result stats__result--unknown"></li>
+        <li class="stats__result stats__result--unknown"></li>
+        <li class="stats__result stats__result--unknown"></li>
+        <li class="stats__result stats__result--unknown"></li>
+      </ul>
+    </div>
+  </div>`;
 
-const fourthScreen = createDomElement(elementGame1);
+  const article = `${content} ${footerTemplate}`;
+
+  return createDomElement(article);
+};
+
+const fourthScreen = elementGame1();
 const buttonBack = fourthScreen.querySelector(`.back`);
 const gameOptionsArea = fourthScreen.querySelectorAll(`.game__option`);
 
@@ -81,6 +78,14 @@ const onGameOptionChanged = () => {
     for (let j = 0; j < radios.length; j++) {
       if (radios[j].checked) {
         isSelected = true;
+        if (radios[j].value === game[0].resources[0].imgType) {
+          initialState.answers += 1;
+          checkAnswers(initialState.answers, initialState.lives);
+        } else {
+          initialState.lives -= 1;
+        }
+
+        renderBlock(document.getElementById(`lives`), livesElementTemplate(initialState))
         break;
       }
     }
