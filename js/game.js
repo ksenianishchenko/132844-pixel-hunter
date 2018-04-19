@@ -1,6 +1,6 @@
 import headerButtonTemplate from './header-button';
 import livesElementTemplate from './lives';
-import {SCREEN_TYPE, IMAGE_TYPE, gameData, initialState} from './data/gameData';
+import {SCREEN_TYPE, IMAGE_TYPE, gameData, initialState} from './data/game-data';
 import {renderBlock, changeScreen} from './util';
 import elementStats from './stats';
 import secondScreen from './greeting';
