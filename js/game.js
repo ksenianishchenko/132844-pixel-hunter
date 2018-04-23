@@ -3,44 +3,20 @@ import livesElementTemplate from './lives';
 import {SCREEN_TYPE, IMAGE_TYPE, gameData, initialState} from './data/game-data';
 import {renderBlock, changeScreen} from './util';
 import elementStats from './stats';
-import secondScreen from './greeting';
+import greetingScreen from './greeting';
+import Game1ScreenView from './game1';
+import Game2ScreenView from './game2';
 
 // рендерит темплейт по данным из gameData объекта массива (данные уровня)
 const getGameLevelTemplate = (levelData) => {
   switch (levelData.screenType) {
     case SCREEN_TYPE.ONE_IMAGE: {
-      return `<p class="game__task">${levelData.description}</p>
-      <form class="game__content  game__content--wide">
-      ${[...levelData.resources].map((resource) => `
-        <div class="game__option">
-          <img src="${resource.src}" alt="" width="705" height="455">
-          <label class="game__answer  game__answer--photo">
-            <input name="${resource.guid}" type="radio" value="photo">
-            <span>Фото</span>
-          </label>
-          <label class="game__answer  game__answer--wide  game__answer--paint">
-            <input name="${resource.guid}" type="radio" value="paint">
-            <span>Рисунок</span>
-          </label>
-        </div>`).join(``)}
-      </form>`;
+      const game2Screen = new Game2ScreenView(levelData);
+      return game2Screen;
     }
     case SCREEN_TYPE.TWO_IMAGES: {
-      return `<p class="game__task">${levelData.description}</p>
-      <form class="game__content">
-        ${[...levelData.resources].map((resource) => `
-          <div class="game__option">
-            <img src="${resource.src}" alt="" width="468" height="458">
-            <label class="game__answer game__answer--photo">
-              <input name="${resource.guid}" type="radio" value="photo">
-              <span>Фото</span>
-            </label>
-            <label class="game__answer game__answer--paint">
-              <input name=${resource.guid} type="radio" value="paint">
-              <span>Рисунок</span>
-            </label>
-          </div>`).join(``)}
-      </form>`;
+      const game1Screen = new Game1ScreenView(levelData);
+      return game1Screen;
     }
     case SCREEN_TYPE.THREE_IMAGES: {
       return `<p class="game__task">${levelData.description}</p>
@@ -78,7 +54,7 @@ const gameScreen = () => {
   // добавляем кнопку "назад" в контейнер backBtn
   const backBtn = gameContainer.querySelector(`#backBtn`);
   backBtn.addEventListener(`click`, () => {
-    changeScreen(secondScreen);
+    changeScreen(greetingScreen);
   });
   renderBlock(backBtn, headerButtonTemplate);
 
@@ -112,7 +88,7 @@ const gameScreen = () => {
         initialState.lives--;
         renderBlock(livesBlock, livesElementTemplate(initialState));
         if (initialState.lives === 0) {
-          changeScreen(secondScreen);
+          changeScreen(greetingScreen);
         }
       }
 

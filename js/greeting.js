@@ -1,21 +1,39 @@
-import {createDomElement, changeScreen} from './util';
-import thirdScreen from './rules';
+import {changeScreen} from './util';
+import RulesScreenView from './rules';
 import logoTemplate from './logo';
 import footerTemplate from './footer';
 import {data} from './data/game-data';
+import AbstractView from './data/abstract-view';
 
-const elementGreeting = () => {
-  const content = `<h1 class="greeting__asterisk">*</h1><div class="greeting__challenge"><h3>${data.greeting.title}</h3><p>${data.greeting.description}</p></div><div class="greeting__continue"><span><img src="img/arrow_right.svg" width="64" height="64" alt="Next"></span></div></div>`;
+export default class GreetingScreenView extends AbstractView {
+  constructor(state) {
+    super();
+    this.state = state;
+  }
 
-  const article = `${logoTemplate} ${content} ${footerTemplate}`;
+  get template() {
+    return `${logoTemplate} <h1 class="greeting__asterisk">*</h1><div class="greeting__challenge"><h3>${this.state.greeting.title}</h3><p>${this.state.greeting.description}</p></div><div class="greeting__continue"><span><img src="img/arrow_right.svg" width="64" height="64" alt="Next"></span></div></div> ${footerTemplate}`;
+  }
 
-  return createDomElement(article);
-};
-const secondScreen = elementGreeting();
-const greetingContinue = secondScreen.querySelector(`.greeting__continue`);
+  get element() {
+    if (!this._element) {
+      const div = document.createElement(`div`);
+      div.innerHTML = this.template;
+      this._element = div;
+    }
 
-greetingContinue.addEventListener(`click`, () => {
-  changeScreen(thirdScreen);
-});
+    return this._element;
+  }
 
-export default secondScreen;
+  render() {
+    changeScreen(this.element);
+  }
+  bind() {
+    const greetingContinue = document.querySelector(`.greeting__continue`);
+    greetingContinue.addEventListener(`click`, () => {
+      const rulesScreen = new RulesScreenView(data);
+      rulesScreen.render();
+      rulesScreen.bind();
+    });
+  }
+}
