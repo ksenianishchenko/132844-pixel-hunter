@@ -1,10 +1,12 @@
-import {changeScreen} from './util';
-import secondScreen from './greeting';
+import GreetingScreenView from './greeting';
+import {data} from './data/game-data';
 
 const firstScreen = document.querySelector(`#intro`);
 const introAsterisk = firstScreen.querySelector(`.intro__asterisk`);
 introAsterisk.addEventListener(`click`, () => {
-  changeScreen(secondScreen);
+  const greetingScreen = new GreetingScreenView(data);
+  greetingScreen.render();
+  greetingScreen.bind();
 });
 
 

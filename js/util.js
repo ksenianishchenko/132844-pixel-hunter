@@ -1,7 +1,7 @@
 export const screenWrapElement = document.querySelector(`.central`);
 export const createDomElement = (template) => {
   const outer = document.createElement(`div`);
-  outer.innerHTML = `${template}`;
+  outer.innerHTML = template;
   return outer;
 };
 
