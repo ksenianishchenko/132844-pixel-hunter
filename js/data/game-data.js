@@ -1,3 +1,4 @@
+export const users = [];
 export const data = {
   greeting: {
     title: `Лучшие художники-фотореалисты бросают&nbsp;тебе&nbsp;вызов!`,

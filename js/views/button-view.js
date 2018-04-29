@@ -12,7 +12,6 @@ export default class ButtonView extends AbstractView {
       </button>
     </div>`;
   }
-
   bind() {
     this.element.onclick = (evt) => {
       evt.preventDefault();
