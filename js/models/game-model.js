@@ -1,8 +1,9 @@
-import {SCREEN_TYPE, gameData} from './../data/game-data';
+import {SCREEN_TYPE} from './../data/game-data';
 
 export default class GameModel {
-  constructor(playerName) {
+  constructor(playerName, gameScreens) {
     this.playerName = playerName;
+    this.gameScreens = gameScreens;
     this.restart();
   }
   restart() {
@@ -29,7 +30,7 @@ export default class GameModel {
     }
   }
   getCurrentLevel() {
-    return gameData[this._state.level];
+    return this.gameScreens[this._state.level];
   }
   answer(imageId, imageType) {
     const answerTime = this.ticks;
@@ -77,7 +78,7 @@ export default class GameModel {
     return this._state.lives === 0;
   }
   moveToNextLevel() {
-    if (this._state.level + 1 < gameData.length) {
+    if (this._state.level + 1 < this.gameScreens.length) {
       this._state.level++;
       return true;
     }
@@ -121,9 +122,6 @@ export default class GameModel {
     return this._state.slowAnswersCount;
   }
   get isWin() {
-    if (this._state.lives === 0 && this._state.level !== 2) {
-      return false;
-    }
-    return true;
+    return !(this._state.lives === 0);
   }
 }

@@ -10,14 +10,15 @@ export default class Game1ScreenView extends AbstractView {
     return `<p class="game__task">${this.level.description}</p>
     <form class="game__content">
       ${[...this.level.resources].map((resource) => `
+        <span>${resource.imgType}</span>
         <div class="game__option">
-          <img src="${resource.src}" alt="" width="468" height="458">
+          <img src="${resource.image.url}" alt="" width="${resource.image.width}" height="${resource.image.height}">
           <label class="game__answer game__answer--photo">
             <input name="${resource.guid}" type="radio" value="photo">
             <span>Фото</span>
           </label>
           <label class="game__answer game__answer--paint">
-            <input name=${resource.guid} type="radio" value="paint">
+            <input name=${resource.guid} type="radio" value="painting">
             <span>Рисунок</span>
           </label>
         </div>`).join(``)}

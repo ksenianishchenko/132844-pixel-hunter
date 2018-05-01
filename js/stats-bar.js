@@ -1,8 +1,8 @@
-import {gameData, SCREEN_TYPE} from './data/game-data';
-const statsBarString = (state) => {
+import {SCREEN_TYPE} from './data/game-data';
+const statsBarString = (gameModel) => {
   let stats = [];
-  gameData.forEach((level, i) => {
-    const answers = state.answers.filter((a) => a.level === i);
+  gameModel.gameScreens.forEach((level, i) => {
+    const answers = gameModel.answers.filter((a) => a.level === i);
     if (level.screenType === SCREEN_TYPE.THREE_IMAGES) {
       let barType = `unknown`;
       if (answers.length !== 0) {
