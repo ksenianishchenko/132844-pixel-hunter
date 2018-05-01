@@ -42,15 +42,22 @@ export default class GameScreen {
         self.stopTimer();
         self.updateLivesView();
         self.updateStatsBarView();
+        this.gameModel.moveToNextLevel();
+        this.changeLevel();
+        if (this.gameModel.isDead) {
+          Application.showStats(this.gameModel);
+        }
       } else if (self.gameModel.ticks >= 25) {
         const timerBlock = this.header.querySelector(`#timer`);
         timerBlock.classList.add(`blink`);
       }
-    }, 1000);
+    }, 100);
     this.updateTimerView();
   }
   stopTimer() {
     const intervalId = this._timerInterval;
+    const timerBlock = this.header.querySelector(`#timer`);
+    timerBlock.classList.remove(`blink`);
     if (intervalId) {
       delete this._timerInterval;
       clearInterval(intervalId);
