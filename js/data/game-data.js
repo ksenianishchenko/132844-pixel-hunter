@@ -1,3 +1,4 @@
+export const users = [];
 export const data = {
   greeting: {
     title: `Лучшие художники-фотореалисты бросают&nbsp;тебе&nbsp;вызов!`,
@@ -14,15 +15,6 @@ export const data = {
       <br>
       Готовы?`
   },
-  game1: {
-    description: `Угадайте для каждого изображения фото или рисунок?`
-  },
-  game2: {
-    description: `Угадай, фото или рисунок?`
-  },
-  game3: {
-    description: `Найдите рисунок среди изображений`
-  },
   stats: {
     title: `Победа!`
   }
@@ -36,7 +28,7 @@ export const SCREEN_TYPE = {
 
 export const IMAGE_TYPE = {
   PHOTO: `photo`,
-  PAINTING: `paint`
+  PAINTING: `painting`
 };
 
 export const initialState = {

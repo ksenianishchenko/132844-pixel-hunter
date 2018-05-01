@@ -1,1 +1,3 @@
-import './intro';
+import Application from './application';
+
+Application.start();
