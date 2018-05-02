@@ -51,7 +51,7 @@ export default class GameScreen {
         const timerBlock = this.header.querySelector(`#timer`);
         timerBlock.classList.add(`blink`);
       }
-    }, 100);
+    }, 1000);
     this.updateTimerView();
   }
   stopTimer() {

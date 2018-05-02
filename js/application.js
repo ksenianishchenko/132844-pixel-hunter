@@ -83,10 +83,11 @@ export default class Aplication {
   }
 
   static showStats() {
-    const playerName = screens.playerName;
+    const playerName = users[0].playerName;
+    const stats = users[0]._state;
     const statsScreen = new StatsScreen(screens);
     changeScreen(statsScreen.element);
-    Loader.saveResults(screens.state, playerName).then(() => Loader.loadResults(playerName).then(() => changeScreen(new StatsScreen(screens).element))).catch((e) => Aplication.showError(e));
+    Loader.saveResults(stats.answers, playerName).then(() => Loader.loadResults(playerName).then(() => changeScreen(new StatsScreen(screens).element))).catch((e) => Aplication.showError(e));
   }
 
   static showError(error) {

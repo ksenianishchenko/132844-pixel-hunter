@@ -1,4 +1,4 @@
-const SERVER_URL = `https://es.dump.academy/pixel-hunter/`;
+const SERVER_URL = `https://es.dump.academy/pixel-hunter`;
 const DEFAULT_NAME = `k0`;
 const APP_ID = 526396;
 
@@ -18,7 +18,7 @@ export default class Loader {
   }
 
   static loadResults(name = DEFAULT_NAME) {
-    return fetch(`${SERVER_URL}/stats/${APP_ID} - ${name}`).then(checkStatus).then(toJsonFile);
+    return fetch(`${SERVER_URL}/stats/${APP_ID}-${name}`).then(checkStatus).then(toJsonFile);
   }
 
   static saveResults(data, name = DEFAULT_NAME) {
@@ -29,6 +29,6 @@ export default class Loader {
       },
       method: `POST`
     };
-    return fetch(`${SERVER_URL}/stats/${APP_ID} - ${name}`, requestSettings).then(checkStatus);
+    return fetch(`${SERVER_URL}/stats/${APP_ID}-${name}`, requestSettings).then(checkStatus);
   }
 }
