@@ -1,5 +1,5 @@
 import Application from '../application';
-import {SCREEN_TYPE} from '../data/game-data';
+import {ScreenType} from '../data/game-data';
 import Game1ScreenView from '../views/game1-view';
 import Game2ScreenView from '../views/game2-view';
 import Game3ScreenView from '../views/game3-view';
@@ -12,9 +12,9 @@ export default class GameScreen {
   constructor(gameModel) {
     this.gameModel = gameModel;
     this.views = new Map();
-    this.views.set(SCREEN_TYPE.TWO_IMAGES, Game1ScreenView);
-    this.views.set(SCREEN_TYPE.ONE_IMAGE, Game2ScreenView);
-    this.views.set(SCREEN_TYPE.THREE_IMAGES, Game3ScreenView);
+    this.views.set(ScreenType.TWO_IMAGES, Game1ScreenView);
+    this.views.set(ScreenType.ONE_IMAGE, Game2ScreenView);
+    this.views.set(ScreenType.THREE_IMAGES, Game3ScreenView);
   }
   get element() {
     return this.header;
@@ -29,7 +29,14 @@ export default class GameScreen {
     this.updateTimerView();
     this.changeLevel();
     const backBtn = this.header.querySelector(`.back`);
-    backBtn.addEventListener(`click`, Application.showGreeting);
+    backBtn.addEventListener(`click`, () => {
+      this.stopTimer();
+      Application.showGreeting();
+    });
+  }
+  showStats() {
+    this.stopTimer();
+    Application.showStats(this.gameModel);
   }
   startTimer() {
     this.stopTimer();
@@ -45,7 +52,7 @@ export default class GameScreen {
         this.gameModel.moveToNextLevel();
         this.changeLevel();
         if (this.gameModel.isDead) {
-          Application.showStats(this.gameModel);
+          self.showStats();
         }
       } else if (self.gameModel.ticks >= 25) {
         const timerBlock = this.header.querySelector(`#timer`);
@@ -68,13 +75,13 @@ export default class GameScreen {
     this.updateLivesView();
     this.updateStatsBarView();
     if (this.gameModel.isDead) {
-      Application.showStats(this.gameModel);
+      this.showStats();
     } else {
       if (this.gameModel.isLevelCompleted) {
         if (this.gameModel.moveToNextLevel()) {
           this.changeLevel();
         } else {
-          Application.showStats(this.gameModel);
+          this.showStats();
         }
       }
     }
@@ -84,15 +91,15 @@ export default class GameScreen {
     const level = this.gameModel.getCurrentLevel();
     let view;
     switch (level.screenType) {
-      case SCREEN_TYPE.TWO_IMAGES: {
+      case ScreenType.TWO_IMAGES: {
         view = new Game1ScreenView(level);
         break;
       }
-      case SCREEN_TYPE.ONE_IMAGE: {
+      case ScreenType.ONE_IMAGE: {
         view = new Game2ScreenView(level);
         break;
       }
-      case SCREEN_TYPE.THREE_IMAGES: {
+      case ScreenType.THREE_IMAGES: {
         view = new Game3ScreenView(level);
         break;
       }

@@ -9,4 +9,11 @@ export default class IntroScreen {
   get element() {
     return this.root;
   }
+  fadeOut() {
+    this.view.greetingElement.classList.add(`transparent`);
+  }
+
+  fadeIn() {
+    this.view.greetingElement.classList.remove(`transparent`);
+  }
 }

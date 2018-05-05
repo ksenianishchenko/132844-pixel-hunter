@@ -4,7 +4,7 @@ import RulesScreen from './presenters/rules-screen';
 import GameModel from './models/game-model';
 import GameScreen from './presenters/game-screen';
 import StatsScreen from './presenters/stats-screen';
-import {users, SCREEN_TYPE} from './data/game-data';
+import {users, ScreenType} from './data/game-data';
 import Loader from './loader';
 import ErrorScreen from './presenters/error-screen';
 
@@ -19,11 +19,11 @@ const toGameData = (screensArray) => {
   const gameScreens = screensArray.map((screen, screenIndex) => {
     let screenType;
     if (screen.type === `tinder-like`) {
-      screenType = SCREEN_TYPE.ONE_IMAGE;
+      screenType = ScreenType.ONE_IMAGE;
     } else if (screen.type === `two-of-two`) {
-      screenType = SCREEN_TYPE.TWO_IMAGES;
+      screenType = ScreenType.TWO_IMAGES;
     } else if (screen.type === `one-of-three`) {
-      screenType = SCREEN_TYPE.THREE_IMAGES;
+      screenType = ScreenType.THREE_IMAGES;
     } else {
       throw new Error(`Unknown screen type ${screen.type}`);
     }
@@ -53,9 +53,10 @@ let screens = [];
 
 export default class Aplication {
   static start() {
+    Aplication.showWelcome();
     Loader.loadData().then((json) => {
       screens = toGameData(json);
-      Aplication.showWelcome();
+      Aplication.showGreeting();
     }).catch((e) => Aplication.showError(e));
   }
 

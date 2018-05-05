@@ -1,10 +1,53 @@
-import {SCREEN_TYPE} from './../data/game-data';
+import {ScreenType} from './../data/game-data';
 
 export default class GameModel {
   constructor(playerName, gameScreens) {
     this.playerName = playerName;
     this.gameScreens = gameScreens;
     this.restart();
+  }
+  get points() {
+    return this._state.points;
+  }
+  get lives() {
+    return this._state.lives;
+  }
+  get answers() {
+    return this._state.answers;
+  }
+  get fastAnswersCount() {
+    return this._state.fastAnswersCount;
+  }
+  get slowAnswersCount() {
+    return this._state.slowAnswersCount;
+  }
+  get isWin() {
+    return !(this._state.lives === 0);
+  }
+  get isDead() {
+    return this._state.lives === 0;
+  }
+  get isLevelCompleted() {
+    const levelData = this.getCurrentLevel();
+    let isFinished = false;
+    for (let i = 0; i < levelData.resources.length; i++) {
+      const guid = levelData.resources[i].guid;
+      const answer = this._state.answers.find((a) => a.guid === guid);
+      if (levelData.screenType === ScreenType.THREE_IMAGES) {
+        if (answer) {
+          isFinished = true;
+          break;
+        }
+      } else {
+        if (answer) {
+          isFinished = true;
+        } else {
+          isFinished = false;
+          break;
+        }
+      }
+    }
+    return isFinished;
   }
   restart() {
     this._state = {
@@ -74,54 +117,11 @@ export default class GameModel {
   die() {
     this._state.lives--;
   }
-  get isDead() {
-    return this._state.lives === 0;
-  }
   moveToNextLevel() {
     if (this._state.level + 1 < this.gameScreens.length) {
       this._state.level++;
       return true;
     }
     return false;
-  }
-  get isLevelCompleted() {
-    const levelData = this.getCurrentLevel();
-    let isFinished = false;
-    for (let i = 0; i < levelData.resources.length; i++) {
-      const guid = levelData.resources[i].guid;
-      const answer = this._state.answers.find((a) => a.guid === guid);
-      if (levelData.screenType === SCREEN_TYPE.THREE_IMAGES) {
-        if (answer) {
-          isFinished = true;
-          break;
-        }
-      } else {
-        if (answer) {
-          isFinished = true;
-        } else {
-          isFinished = false;
-          break;
-        }
-      }
-    }
-    return isFinished;
-  }
-  get points() {
-    return this._state.points;
-  }
-  get lives() {
-    return this._state.lives;
-  }
-  get answers() {
-    return this._state.answers;
-  }
-  get fastAnswersCount() {
-    return this._state.fastAnswersCount;
-  }
-  get slowAnswersCount() {
-    return this._state.slowAnswersCount;
-  }
-  get isWin() {
-    return !(this._state.lives === 0);
   }
 }

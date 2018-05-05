@@ -1,5 +1,5 @@
 import AbstractView from './abstract-view';
-import {IMAGE_TYPE} from './../data/game-data';
+import {ImageType} from './../data/game-data';
 import footerTemplate from './../footer';
 
 export default class Game3ScreenView extends AbstractView {
@@ -19,12 +19,12 @@ export default class Game3ScreenView extends AbstractView {
   bind() {
     const gameBlock = this.element.querySelector(`.game__content`);
     const gameOptions = gameBlock.querySelectorAll(`.game__option`);
-    let photos = this.level.resources.filter((r) => r.imgType === IMAGE_TYPE.PHOTO);
+    let photos = this.level.resources.filter((r) => r.imgType === ImageType.PHOTO);
     let screenImageType;
     if (photos.length === 1) {
-      screenImageType = IMAGE_TYPE.PHOTO;
+      screenImageType = ImageType.PHOTO;
     } else {
-      screenImageType = IMAGE_TYPE.PAINTING;
+      screenImageType = ImageType.PAINTING;
     }
     const self = this;
     for (let i = 0; i < gameOptions.length; i++) {
