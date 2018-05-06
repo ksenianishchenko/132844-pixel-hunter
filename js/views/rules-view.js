@@ -34,7 +34,8 @@ export default class RulesScreenView extends AbstractView {
     });
 
     const self = this;
-    goButton.addEventListener(`click`, () => {
+    goButton.addEventListener(`click`, (evt) => {
+      evt.preventDefault();
       const username = rulesInput.value;
       rulesInput.value = ``;
       goButton.setAttribute(`disabled`, `disabled`);

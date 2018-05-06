@@ -30,7 +30,7 @@ export default class Game3ScreenView extends AbstractView {
     for (let i = 0; i < gameOptions.length; i++) {
       gameOptions[i].addEventListener(`click`, (event) => {
         const gameOption = event.currentTarget;
-        self.onAnswer(gameOption.attributes[`data-guid`].value, screenImageType);
+        self.onAnswer(gameOption.dataset.guid, screenImageType);
       });
     }
   }
